@@ -1,5 +1,6 @@
 import tkinter as tk
 import pandas as pd
+import random
 from PIL import Image,ImageTk
 
 screen_size = '500x400'
@@ -8,12 +9,30 @@ window.geometry(screen_size)
 window.resizable(False, False)
 
 
+#TESTY
+data_base = pd.read_csv("mobile.csv", low_memory = False, encoding="ISO-8859-1")
+pd.set_option('max_columns', None)
+#print(len(data_base[5:172]))
+test_reko = pd.DataFrame(columns= ['Brand', 'Phone'])
+nr = []
+for i in range(3):
+    nr.append(random.randint(5, 172))
+    test_reko2 = data_base[nr[i]:nr[i]+1][['Brand', 'Phone']]
+    test_reko = pd.concat([test_reko, test_reko2], ignore_index = True, axis = 0)
+    #print(nr)
+    #print(data_base[nr:nr+1][['Brand', 'Phone']])
+print(test_reko)
+
+
 def reko_random():
     new_window = tk.Toplevel(window)
     new_window.geometry(screen_size)
     new_window.resizable(False, False)
     q_button = tk.Button(new_window, text= 'Wyjscie', command= new_window.destroy)
     q_button.pack(side= 'bottom')
+    test_text = tk.Text(new_window)
+    test_text.pack()
+    test_text.insert('end', test_reko)
 
 def reko_content():
     new_window = tk.Toplevel(window)
