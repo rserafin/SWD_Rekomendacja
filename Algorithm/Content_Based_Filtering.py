@@ -1,4 +1,4 @@
-from Algorithm import Algorithm
+from Algorithm.Algorithm import Algorithm
 
 
 class Content_Based_Filtering(Algorithm):
