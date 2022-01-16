@@ -30,6 +30,7 @@ class PhoneRecomender(tk.Tk):
         self.user_list = pd.read_csv(self.settings.user_list_filename)
         self.database = None    # miejsce na zapis wczytanej bazy danych
         self.random_db = pd.DataFrame(columns= self.settings.columns)
+        self.simple_content_db = pd.DataFrame(columns= self.settings.columns)
 
         #przycisk do rekomendacji
         self.recommend_button = tk.Button(self, text= 'Rekomneduj!')
@@ -76,8 +77,29 @@ class PhoneRecomender(tk.Tk):
 
     def recommend(self):
         """Funkcja do utworzenia rekomendacji i ich wyswietlenie w nowym oknie"""
+        new_window = tk.Toplevel(self)
+
         self.random_db = random_reco(self.database, self.settings.columns)
-        print(self.random_db)
+        self.simple_content_db = simple_reco(self.database, self.settings.columns)
+        #print(self.random_db)
+
+        #losowa rekomendacja
+        random_label = tk.Label(new_window, text= 'Losowa rekomendacja')
+        random_label.pack(side= 'top', fill= 'x')
+        random_disp = tk.Text(new_window, height= 4)
+        random_disp.insert('end', self.random_db[self.settings.columns])
+        random_disp.pack(side= 'top', fill= 'x')
+
+        #prosta content
+        simple_label = tk.Label(new_window, text= 'Prosta content rekomendacja')
+        simple_label.pack(side= 'top', fill= 'x')
+        simple_disp = tk.Text(new_window, height= 4)
+        simple_disp.insert('end', self.simple_content_db[self.settings.columns])
+        simple_disp.pack(side= 'top', fill= 'x')
+
+        q_button = tk.Button(new_window, text= 'Wyjscie', command= new_window.destroy)
+        q_button.pack(side= 'bottom', fill= 'x')
+
 
     def change_user(self):
         """Funkcja sluzaca do wyswietlania okna zmiany uzytkokwnika"""
