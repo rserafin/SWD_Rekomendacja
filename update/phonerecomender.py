@@ -31,6 +31,7 @@ class PhoneRecomender(tk.Tk):
         self.database = None    # miejsce na zapis wczytanej bazy danych
         self.random_db = pd.DataFrame(columns= self.settings.columns)
         self.simple_content_db = pd.DataFrame(columns= self.settings.columns)
+        self.topsis_db = pd.DataFrame(columns= self.settings.columns)
 
         #przycisk do rekomendacji
         self.recommend_button = tk.Button(self, text= 'Rekomneduj!')
@@ -81,6 +82,7 @@ class PhoneRecomender(tk.Tk):
 
         self.random_db = random_reco(self.database, self.settings.columns)
         self.simple_content_db = simple_reco(self.database, self.settings.columns)
+        self.topsis_db = topsis_reco(self.database, self.settings.columns)
         #print(self.random_db)
 
         #losowa rekomendacja
@@ -96,6 +98,13 @@ class PhoneRecomender(tk.Tk):
         simple_disp = tk.Text(new_window, height= 4)
         simple_disp.insert('end', self.simple_content_db[self.settings.columns])
         simple_disp.pack(side= 'top', fill= 'x')
+
+        #topsis
+        topsis_label = tk.Label(new_window, text= 'Rekomendacja topsis')
+        topsis_label.pack(side= 'top', fill= 'x')
+        topsis_disp = tk.Text(new_window, height= 4)
+        topsis_disp.insert('end', self.topsis_db[self.settings.columns])
+        topsis_disp.pack(side= 'top', fill= 'x')
 
         q_button = tk.Button(new_window, text= 'Wyjscie', command= new_window.destroy)
         q_button.pack(side= 'bottom', fill= 'x')
