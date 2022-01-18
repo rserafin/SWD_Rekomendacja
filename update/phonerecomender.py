@@ -28,6 +28,7 @@ class PhoneRecomender(tk.Tk):
 
         #bazy danych
         self.user_list = pd.read_csv(self.settings.user_list_filename)
+        self.weights = None
         self.database = None    # miejsce na zapis wczytanej bazy danych
         self.random_db = pd.DataFrame(columns= self.settings.columns)
         self.simple_content_db = pd.DataFrame(columns= self.settings.columns)
@@ -61,7 +62,7 @@ class PhoneRecomender(tk.Tk):
 
         #informacja o uzytkowniku
         self.user_name = ''
-        self.user_list = pd.read_csv(self.settings.user_list_filename)
+        self.user_list = pd.read_csv(self.settings.user_list_filename, sep= ' ')
         self.user_text = tk.StringVar()
         self.user_text.set(f'Witaj {self.user_name}!')
         self.user_label = tk.Label(self, textvariable= self.user_text)
@@ -80,9 +81,14 @@ class PhoneRecomender(tk.Tk):
         """Funkcja do utworzenia rekomendacji i ich wyswietlenie w nowym oknie"""
         new_window = tk.Toplevel(self)
 
+        st = self.user_list.loc[self.user_list['Username'] == self.user_name]['Prefer'].to_list()
+        st2 = list(st[0].split(','))
+        mape = map(int, st2)
+        self.weights = list(mape)
+
         self.random_db = random_reco(self.database, self.settings.columns)
         self.simple_content_db = simple_reco(self.database, self.settings.columns)
-        self.topsis_db = topsis_reco(self.database, self.settings.columns)
+        self.topsis_db = topsis_reco(self.database, self.settings.columns, self.weights)
         #print(self.random_db)
 
         #losowa rekomendacja

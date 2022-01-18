@@ -12,9 +12,9 @@ class Settings():
         self.button_weight = 200
         self.button_height = 40
         #Ustawienia baz
-        self.columns = ['Brand', 'Phone']
+        self.columns = ['Brand', 'Phone', 'Price']
         #Ustawienia bazy uzytkownikow
-        self.user_list_filename = 'user.csv'
+        self.user_list_filename = 'tests.csv'
 
 
 
