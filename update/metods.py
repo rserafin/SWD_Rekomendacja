@@ -1,6 +1,6 @@
 import random
 import pandas as pd
-from topsis import *
+from topsis3 import Topsis
 
 def random_reco(database, columns):
     results = pd.DataFrame(columns= columns)
@@ -40,3 +40,9 @@ def topsis_reco(database, columns, weights = [1, 1, 1, 1, 1], criterias = [True,
         results = pd.concat([results, result], ignore_index = True, axis = 0)
     #print(t.rank_to_best_similarity())
     return results
+
+def simple_weight_reco(database, columns):
+    results = pd.DataFrame(columns= columns)
+    to_norm = database[:][['Performance', 'Camera', 'Audio', 'Battery', 'Price']]
+    norm_db = to_norm/to_norm.max()
+    #print(norm_db)

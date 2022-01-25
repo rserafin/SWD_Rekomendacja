@@ -11,10 +11,11 @@ class Settings():
         #Ustawienia przyciskow
         self.button_weight = 200
         self.button_height = 40
-        #Ustawienia baz
+        #Ustawienia wyswietlanych baz
         self.columns = ['Brand', 'Phone', 'Price']
-        #Ustawienia bazy uzytkownikow
+        #Ustawienia bazy
         self.user_list_filename = 'tests.csv'
+        self.database_filename = 'fake_mobile.csv'
 
 
 

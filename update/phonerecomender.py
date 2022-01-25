@@ -29,7 +29,7 @@ class PhoneRecomender(tk.Tk):
         #bazy danych
         self.user_list = pd.read_csv(self.settings.user_list_filename)
         self.weights = None
-        self.database = None    # miejsce na zapis wczytanej bazy danych
+        self.database = pd.read_csv(self.settings.database_filename)
         self.random_db = pd.DataFrame(columns= self.settings.columns)
         self.simple_content_db = pd.DataFrame(columns= self.settings.columns)
         self.topsis_db = pd.DataFrame(columns= self.settings.columns)
@@ -56,13 +56,14 @@ class PhoneRecomender(tk.Tk):
 
         #informacja o wczytanej bazie danych
         self.db_info_text = tk.StringVar()
-        self.db_info_text.set('Nie wczytano bazy dancyh.')
+        
+        self.db_info_text.set(f'Wczytano baze danych. Liczy ona {len(self.database)} pozycji.')
         self.db_info = tk.Label(self, textvariable= self.db_info_text)
         self.db_info.pack(ipady= 10, side= 'bottom', fill='x')
 
         #informacja o uzytkowniku
-        self.user_name = ''
         self.user_list = pd.read_csv(self.settings.user_list_filename, sep= ' ')
+        self.user_name = self.user_list['Username'][0]
         self.user_text = tk.StringVar()
         self.user_text.set(f'Witaj {self.user_name}!')
         self.user_label = tk.Label(self, textvariable= self.user_text)
@@ -114,6 +115,8 @@ class PhoneRecomender(tk.Tk):
 
         q_button = tk.Button(new_window, text= 'Wyjscie', command= new_window.destroy)
         q_button.pack(side= 'bottom', fill= 'x')
+
+        simple_weight_reco(self.database, self.settings.columns)
 
 
     def change_user(self):
